@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NeoNova — Sites para restaurantes e comércios</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy: #0F1B2D;
+    --navy-light: #182840;
+    --brass: #B8874B;
+    --brass-light: #D3A66C;
+    --ivory: #F7F4EE;
+    --charcoal: #22262B;
+    --sage: #5B6B52;
+    --line: rgba(15,27,45,0.12);
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+
+  html{scroll-behavior:smooth;}
+
+  body{
+    background: var(--ivory);
+    color: var(--charcoal);
+    font-family: 'Inter', sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  h1,h2,h3,h4{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    color: var(--navy);
+    line-height:1.1;
+  }
+
+  .eyebrow{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.78rem;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color: var(--brass);
+    font-weight:500;
+  }
+
+  a{color:inherit;text-decoration:none;}
+
+  .wrap{
+    max-width:1180px;
+    margin:0 auto;
+    padding:0 32px;
+  }
+
+  /* ---------- Awning divider (signature element) ---------- */
+  .awning{
+    height:14px;
+    background: repeating-linear-gradient(
+      90deg,
+      var(--navy) 0px, var(--navy) 34px,
+      var(--brass) 34px, var(--brass) 68px
+    );
+  }
+  .awning.reverse{
+    background: repeating-linear-gradient(
+      90deg,
+      var(--brass) 0px, var(--brass) 34px,
+      var(--navy) 34px, var(--navy) 68px
+    );
+  }
+
+  /* ---------- Nav ---------- */
+  header{
+    position:sticky; top:0; z-index:50;
+    background: rgba(247,244,238,0.92);
+    backdrop-filter: blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  nav{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:20px 32px;
+    max-width:1180px;
+    margin:0 auto;
+  }
+  .logo{
+    font-family:'Fraunces', serif;
+    font-weight:700;
+    font-size:1.4rem;
+    color: var(--navy);
+    letter-spacing:-0.01em;
+  }
+  .logo span{color:var(--brass);}
+  .nav-links{display:flex; gap:36px; align-items:center;}
+  .nav-links a{
+    font-size:0.92rem;
+    font-weight:500;
+    color: var(--navy);
+    opacity:0.75;
+    transition:opacity .2s;
+  }
+  .nav-links a:hover{opacity:1;}
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    padding:12px 24px;
+    border-radius:2px;
+    font-weight:600;
+    font-size:0.92rem;
+    cursor:pointer;
+    border:1px solid transparent;
+    transition:transform .15s ease, box-shadow .15s ease, background .15s ease;
+  }
+  .btn-primary{
+    background: var(--navy);
+    color: var(--ivory);
+  }
+  .btn-primary:hover{background: var(--navy-light); transform:translateY(-1px);}
+  .btn-outline{
+    border-color: var(--navy);
+    color: var(--navy);
+    background:transparent;
+  }
+  .btn-outline:hover{background: var(--navy); color:var(--ivory);}
+  .btn-brass{
+    background: var(--brass);
+    color: var(--navy);
+  }
+  .btn-brass:hover{background: var(--brass-light); transform:translateY(-1px);}
+  .btn:focus-visible{outline:3px solid var(--brass); outline-offset:2px;}
+
+  /* ---------- Hero ---------- */
+  .hero{
+    padding:100px 0 80px;
+    display:grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap:64px;
+    align-items:center;
+  }
+  .hero h1{
+    font-size:3.4rem;
+    margin:18px 0 22px;
+    letter-spacing:-0.01em;
+  }
+  .hero h1 em{
+    font-style:normal;
+    color:var(--brass);
+  }
+  .hero p{
+    font-size:1.12rem;
+    color: rgba(34,38,43,0.78);
+    max-width:480px;
+    margin-bottom:34px;
+  }
+  .hero-actions{display:flex; gap:16px; flex-wrap:wrap;}
+
+  /* Storefront mockup */
+  .storefront{
+    background: var(--navy);
+    border-radius:6px;
+    overflow:hidden;
+    box-shadow:0 30px 60px -20px rgba(15,27,45,0.45);
+  }
+  .storefront-awning{
+    height:22px;
+    background: repeating-linear-gradient(
+      90deg,
+      var(--brass) 0px, var(--brass) 24px,
+      var(--brass-light) 24px, var(--brass-light) 48px
+    );
+  }
+  .storefront-bar{
+    display:flex; align-items:center; gap:7px;
+    padding:12px 16px;
+    background: var(--navy-light);
+  }
+  .storefront-bar span{
+    width:9px; height:9px; border-radius:50%;
+    background: rgba(247,244,238,0.25);
+  }
+  .storefront-body{
+    background: var(--ivory);
+    padding:28px;
+  }
+  .storefront-body .tag{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.7rem;
+    color:var(--sage);
+    text-transform:uppercase;
+    letter-spacing:0.1em;
+  }
+  .storefront-body h3{
+    font-size:1.5rem;
+    margin:8px 0 10px;
+  }
+  .storefront-body p{
+    font-size:0.9rem;
+    color:rgba(34,38,43,0.65);
+    margin-bottom:18px;
+  }
+  .storefront-row{display:flex; gap:10px;}
+  .storefront-chip{
+    flex:1;
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:4px;
+    padding:12px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.72rem;
+    color:var(--navy);
+  }
+  .storefront-chip b{display:block; font-size:1rem; font-family:'Fraunces',serif; color:var(--brass);}
+
+  /* ---------- Section shared ---------- */
+  section{padding:88px 0;}
+  .section-head{
+    max-width:640px;
+    margin-bottom:56px;
+  }
+  .section-head h2{
+    font-size:2.3rem;
+    margin-top:14px;
+  }
+  .section-head p{
+    color:rgba(34,38,43,0.7);
+    font-size:1.05rem;
+    margin-top:16px;
+  }
+
+  /* ---------- Portfolio ---------- */
+  .portfolio{background:var(--navy);}
+  .portfolio .eyebrow{color:var(--brass-light);}
+  .portfolio .section-head h2{color:var(--ivory);}
+  .portfolio .section-head p{color:rgba(247,244,238,0.65);}
+  .cards{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:28px;
+  }
+  .pcard{
+    background: var(--navy-light);
+    border:1px solid rgba(247,244,238,0.1);
+    border-radius:6px;
+    overflow:hidden;
+  }
+  .pcard-top{
+    height:150px;
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Fraunces',serif;
+    font-size:1.6rem;
+    color:var(--navy);
+  }
+  .pcard-top.a{background:linear-gradient(135deg, var(--brass), var(--brass-light));}
+  .pcard-top.b{background:linear-gradient(135deg, #7d8c72, var(--sage));}
+  .pcard-top.c{background:linear-gradient(135deg, #c9b088, var(--brass));}
+  .pcard-info{padding:22px;}
+  .pcard-info .eyebrow{color:var(--brass-light); margin-bottom:6px; display:block;}
+  .pcard-info h4{color:var(--ivory); font-size:1.15rem; margin-bottom:8px;}
+  .pcard-info p{color:rgba(247,244,238,0.6); font-size:0.9rem;}
+
+  /* ---------- Pricing ---------- */
+  .plans{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:24px;
+  }
+  .plan{
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:34px 28px;
+    background:#fff;
+    display:flex; flex-direction:column;
+  }
+  .plan.featured{
+    background:var(--navy);
+    border-color:var(--navy);
+    transform:translateY(-10px);
+    box-shadow:0 24px 48px -16px rgba(15,27,45,0.35);
+  }
+  .plan.featured .plan-name, .plan.featured h3, .plan.featured .price-sub{color:var(--ivory);}
+  .plan.featured p{color:rgba(247,244,238,0.7);}
+  .plan.featured li{color:rgba(247,244,238,0.85); border-color:rgba(247,244,238,0.15);}
+  .plan-name{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.75rem;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:var(--sage);
+    margin-bottom:10px;
+  }
+  .plan.featured .plan-name{color:var(--brass-light);}
+  .plan h3{font-size:2.2rem; margin-bottom:4px;}
+  .price-sub{font-size:0.85rem; color:rgba(34,38,43,0.55); margin-bottom:20px;}
+  .plan p.desc{font-size:0.92rem; color:rgba(34,38,43,0.68); margin-bottom:22px;}
+  .plan ul{list-style:none; margin-bottom:28px; flex:1;}
+  .plan li{
+    padding:10px 0;
+    border-top:1px solid var(--line);
+    font-size:0.92rem;
+    display:flex; gap:10px;
+  }
+  .plan li::before{content:"—"; color:var(--brass);}
+
+  /* ---------- Process ---------- */
+  .process{background:var(--ivory);}
+  .steps{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:24px;
+  }
+  .step{padding-top:20px; border-top:2px solid var(--navy);}
+  .step .num{
+    font-family:'IBM Plex Mono', monospace;
+    color:var(--brass);
+    font-size:0.85rem;
+    display:block;
+    margin-bottom:10px;
+  }
+  .step h4{font-size:1.15rem; margin-bottom:8px;}
+  .step p{font-size:0.9rem; color:rgba(34,38,43,0.68);}
+
+  /* ---------- Testimonials ---------- */
+  .testi{background:var(--navy);}
+  .testi .section-head h2{color:var(--ivory);}
+  .testi .eyebrow{color:var(--brass-light);}
+  .t-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:24px;
+  }
+  .t-card{
+    background: var(--navy-light);
+    border-radius:6px;
+    padding:26px;
+    border-left:3px solid var(--brass);
+  }
+  .t-card p{color:rgba(247,244,238,0.85); font-size:0.95rem; margin-bottom:18px; font-style:italic;}
+  .t-name{font-weight:600; color:var(--ivory); font-size:0.92rem;}
+  .t-role{font-family:'IBM Plex Mono', monospace; font-size:0.75rem; color:var(--brass-light); margin-top:2px;}
+
+  /* ---------- FAQ ---------- */
+  .faq-list{max-width:760px;}
+  .faq-item{border-bottom:1px solid var(--line);}
+  .faq-q{
+    width:100%;
+    text-align:left;
+    background:none;
+    border:none;
+    padding:22px 0;
+    font-family:'Fraunces', serif;
+    font-size:1.1rem;
+    color:var(--navy);
+    display:flex; justify-content:space-between; align-items:center;
+    cursor:pointer;
+  }
+  .faq-q .icon{color:var(--brass); font-size:1.3rem; transition:transform .2s;}
+  .faq-item.open .faq-q .icon{transform:rotate(45deg);}
+  .faq-a{
+    max-height:0;
+    overflow:hidden;
+    transition:max-height .25s ease;
+  }
+  .faq-a p{padding-bottom:22px; color:rgba(34,38,43,0.7); max-width:640px;}
+
+  /* ---------- CTA footer band ---------- */
+  .cta-band{
+    background:var(--brass);
+    text-align:center;
+    padding:70px 32px;
+  }
+  .cta-band h2{font-size:2.1rem; margin-bottom:16px;}
+  .cta-band p{color:rgba(15,27,45,0.75); margin-bottom:30px; font-size:1.05rem;}
+
+  footer{
+    background:var(--navy);
+    color:rgba(247,244,238,0.6);
+    padding:50px 32px 30px;
+  }
+  .foot-grid{
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:30px;
+    max-width:1180px; margin:0 auto 30px;
+  }
+  .foot-logo{font-family:'Fraunces',serif; color:var(--ivory); font-size:1.3rem; font-weight:700;}
+  .foot-logo span{color:var(--brass);}
+  .foot-links{display:flex; gap:28px; font-size:0.9rem;}
+  .foot-bottom{
+    max-width:1180px; margin:0 auto;
+    padding-top:24px;
+    border-top:1px solid rgba(247,244,238,0.1);
+    font-size:0.8rem;
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;
+  }
+
+  @media (max-width: 900px){
+    .hero{grid-template-columns:1fr; padding-top:60px;}
+    .hero h1{font-size:2.4rem;}
+    .nav-links{display:none;}
+    .cards, .plans, .steps, .t-grid{grid-template-columns:1fr;}
+    .plan.featured{transform:none;}
+    section{padding:60px 0;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <div class="logo">Neo<span>Nova</span></div>
+    <div class="nav-links">
+      <a href="#portfolio">Portfólio</a>
+      <a href="#planos">Planos</a>
+      <a href="#processo">Como funciona</a>
+      <a href="#faq">Dúvidas</a>
+    </div>
+    <a href="#contato" class="btn btn-primary">Falar no WhatsApp</a>
+  </nav>
+</header>
+
+<div class="awning"></div>
+
+<!-- HERO -->
+<section class="hero wrap">
+  <div>
+    <span class="eyebrow">Sites para restaurantes e comércios</span>
+    <h1>A vitrine digital que faz seu <em>cliente entrar</em>.</h1>
+    <p>A NeoNova cria sites profissionais para restaurantes, lanchonetes, lojas e comércios locais — prontos para mostrar cardápio, produtos e localização, e transformar visitas em vendas.</p>
+    <div class="hero-actions">
+      <a href="#planos" class="btn btn-brass">Ver planos e preços</a>
+      <a href="#contato" class="btn btn-outline">Pedir orçamento</a>
+    </div>
+  </div>
+
+  <div class="storefront">
+    <div class="storefront-awning"></div>
+    <div class="storefront-bar"><span></span><span></span><span></span></div>
+    <div class="storefront-body">
+      <span class="tag">cardápio · localização · pedidos</span>
+      <h3>Trattoria Bella Vista</h3>
+      <p>Site institucional com cardápio digital, fotos do salão e botão direto de reserva via WhatsApp.</p>
+      <div class="storefront-row">
+        <div class="storefront-chip">Tempo no ar<b>24h</b></div>
+        <div class="storefront-chip">Carregamento<b>0.8s</b></div>
+        <div class="storefront-chip">Mobile<b>100%</b></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="awning reverse"></div>
+
+<!-- PORTFOLIO -->
+<section class="portfolio" id="portfolio">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Trabalhos recentes</span>
+      <h2>Feito para quem recebe cliente todo dia</h2>
+      <p>Cada projeto é pensado para o ritmo do comércio local: fácil de atualizar, rápido de carregar e simples para o cliente encontrar o que precisa.</p>
+    </div>
+
+    <div class="cards">
+      <div class="pcard">
+        <div class="pcard-top a">Padaria Trigo Dourado</div>
+        <div class="pcard-info">
+          <span class="eyebrow">Padaria &amp; Confeitaria</span>
+          <h4>Cardápio + encomendas</h4>
+          <p>Catálogo de produtos por categoria e formulário de encomenda de bolos com prazo de entrega.</p>
+        </div>
+      </div>
+      <div class="pcard">
+        <div class="pcard-top b">Empório Verde Vida</div>
+        <div class="pcard-info">
+          <span class="eyebrow">Mercearia &amp; Empório</span>
+          <h4>Institucional + delivery</h4>
+          <p>Apresentação da loja, horário de funcionamento e integração com link de pedido por WhatsApp.</p>
+        </div>
+      </div>
+      <div class="pcard">
+        <div class="pcard-top c">Trattoria Bella Vista</div>
+        <div class="pcard-info">
+          <span class="eyebrow">Restaurante</span>
+          <h4>Cardápio digital + reservas</h4>
+          <p>Menu com fotos e preços atualizáveis, mapa de localização e botão de reserva de mesa.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PLANOS -->
+<section id="planos">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Planos</span>
+      <h2>Um pacote para cada fase do seu comércio</h2>
+      <p>Preços claros, sem letras miúdas. Você escolhe o pacote e a gente cuida do resto — do design à publicação.</p>
+    </div>
+
+    <div class="plans">
+      <div class="plan">
+        <span class="plan-name">Vitrine</span>
+        <h3>R$ 890</h3>
+        <span class="price-sub">pagamento único</span>
+        <p class="desc">Ideal para quem está começando e precisa de presença online simples e profissional.</p>
+        <ul>
+          <li>Site institucional de 1 página</li>
+          <li>Cardápio ou catálogo de produtos</li>
+          <li>Botão de WhatsApp integrado</li>
+          <li>Otimizado para celular</li>
+          <li>Domínio e hospedagem inclusos no 1º ano</li>
+        </ul>
+        <a href="#contato" class="btn btn-outline">Escolher Vitrine</a>
+      </div>
+
+      <div class="plan featured">
+        <span class="plan-name">Comércio</span>
+        <h3>R$ 1.590</h3>
+        <span class="price-sub">pagamento único</span>
+        <p class="desc">O mais escolhido por restaurantes e lojas que querem mais páginas e recursos de conversão.</p>
+        <ul>
+          <li>Site de até 5 páginas</li>
+          <li>Cardápio/catálogo com categorias</li>
+          <li>Formulário de reserva ou orçamento</li>
+          <li>Mapa e integração com redes sociais</li>
+          <li>Domínio e hospedagem inclusos no 1º ano</li>
+          <li>1 rodada extra de ajustes de design</li>
+        </ul>
+        <a href="#contato" class="btn btn-brass">Escolher Comércio</a>
+      </div>
+
+      <div class="plan">
+        <span class="plan-name">Premium</span>
+        <h3>R$ 2.690</h3>
+        <span class="price-sub">pagamento único</span>
+        <p class="desc">Para negócios com múltiplas unidades ou que precisam de recursos sob medida.</p>
+        <ul>
+          <li>Site sob medida, sem limite fixo de páginas</li>
+          <li>Cardápio com atualização pelo cliente</li>
+          <li>Integração com meio de pagamento</li>
+          <li>Suporte prioritário por 3 meses</li>
+          <li>Domínio e hospedagem inclusos no 1º ano</li>
+        </ul>
+        <a href="#contato" class="btn btn-outline">Escolher Premium</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="awning"></div>
+
+<!-- PROCESSO -->
+<section class="process" id="processo">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Como funciona</span>
+      <h2>Do primeiro contato ao site no ar</h2>
+      <p>Um processo direto, pensado para quem toca um restaurante ou comércio e não tem tempo a perder.</p>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <span class="num">01</span>
+        <h4>Briefing</h4>
+        <p>Você conta sobre o negócio, o público e o que precisa aparecer no site.</p>
+      </div>
+      <div class="step">
+        <span class="num">02</span>
+        <h4>Proposta e design</h4>
+        <p>Apresentamos o layout e os textos para sua aprovação antes de seguir.</p>
+      </div>
+      <div class="step">
+        <span class="num">03</span>
+        <h4>Construção</h4>
+        <p>O site é montado, testado em celular e computador, e ajustado com você.</p>
+      </div>
+      <div class="step">
+        <span class="num">04</span>
+        <h4>Publicação</h4>
+        <p>Domínio e hospedagem configurados, e seu site vai ao ar.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTEMUNHOS -->
+<section class="testi">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Quem já confiou</span>
+      <h2>Comércios que já estão no ar</h2>
+    </div>
+
+    <div class="t-grid">
+      <div class="t-card">
+        <p>"Desde que o site foi ao ar, as reservas pelo WhatsApp triplicaram. O cardápio digital facilitou muito para o cliente."</p>
+        <div class="t-name">Marina Costa</div>
+        <div class="t-role">Trattoria Bella Vista</div>
+      </div>
+      <div class="t-card">
+        <p>"Processo rápido e sem complicação. Em duas semanas já tínhamos o site no ar com nosso catálogo completo."</p>
+        <div class="t-name">Eduardo Lima</div>
+        <div class="t-role">Empório Verde Vida</div>
+      </div>
+      <div class="t-card">
+        <p>"O formulário de encomenda de bolos organizou nosso atendimento. Hoje quase tudo chega já agendado."</p>
+        <div class="t-name">Patrícia Nunes</div>
+        <div class="t-role">Padaria Trigo Dourado</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="awning reverse"></div>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Perguntas frequentes</span>
+      <h2>Ainda com dúvidas?</h2>
+    </div>
+
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-q"><span>Quanto tempo leva para o site ficar pronto?</span><span class="icon">+</span></button>
+        <div class="faq-a"><p>Em média de 7 a 15 dias úteis, dependendo do plano escolhido e da rapidez no envio de fotos e textos.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q"><span>Preciso ter domínio e hospedagem antes de contratar?</span><span class="icon">+</span></button>
+        <div class="faq-a"><p>Não. Todos os planos já incluem domínio e hospedagem no primeiro ano — cuidamos de toda a parte técnica para você.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q"><span>Consigo atualizar o cardápio ou os produtos sozinho depois?</span><span class="icon">+</span></button>
+        <div class="faq-a"><p>No plano Comércio e Premium sim, com um painel simples. No plano Vitrine, atualizações podem ser solicitadas diretamente para nós.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q"><span>O site funciona bem no celular?</span><span class="icon">+</span></button>
+        <div class="faq-a"><p>Sim, todos os sites são construídos pensando primeiro na experiência mobile, já que a maioria dos clientes acessa pelo celular.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<div id="contato" class="cta-band">
+  <h2>Vamos colocar seu negócio no ar?</h2>
+  <p>Fale agora com a NeoNova e receba uma proposta personalizada para o seu restaurante ou comércio.</p>
+  <a href="https://wa.me/5515996878726" class="btn btn-primary">Falar no WhatsApp agora</a>
+</div>
+
+<footer>
+  <div class="foot-grid">
+    <div class="foot-logo">Neo<span>Nova</span></div>
+    <div class="foot-links">
+      <a href="#portfolio">Portfólio</a>
+      <a href="#planos">Planos</a>
+      <a href="#processo">Como funciona</a>
+      <a href="#faq">Dúvidas</a>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <span>© 2026 NeoNova. Sites para restaurantes e comércios.</span>
+    <span>contato@neonova.com.br</span>
+  </div>
+</footer>
+
+<script>
+  document.querySelectorAll('.faq-item').forEach(item => {
+    const q = item.querySelector('.faq-q');
+    const a = item.querySelector('.faq-a');
+    q.addEventListener('click', () => {
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item.open').forEach(other => {
+        if(other !== item){
+          other.classList.remove('open');
+          other.querySelector('.faq-a').style.maxHeight = null;
+        }
+      });
+      if(isOpen){
+        item.classList.remove('open');
+        a.style.maxHeight = null;
+      } else {
+        item.classList.add('open');
+        a.style.maxHeight = a.scrollHeight + 'px';
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
